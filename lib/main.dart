@@ -402,14 +402,13 @@ class CustomSearch extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    // Realiza la búsqueda en la base de datos y obtén los títulos de los libros
-    Future<List<String>> searchBooks() async {
-      // Realiza una consulta a la base de datos para obtener los títulos de los libros
-      List<Book> matchingBooks = await dbHelper.searchBooksByTitle(query);
-      return matchingBooks.map((book) => book.titulo!).toList();
+    // Realiza la búsqueda en la base de datos y obtén los libros
+    Future<List<Book>> searchBooks() async {
+      // Realiza una consulta a la base de datos para obtener los libros
+      return await dbHelper.searchBooksByTitle(query);
     }
 
-    return FutureBuilder<List<String>>(
+    return FutureBuilder<List<Book>>(
       future: searchBooks(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -422,10 +421,24 @@ class CustomSearch extends SearchDelegate {
           return ListView.builder(
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
-              var result = snapshot.data![index];
+              var book = snapshot.data![index];
               return ListTile(
-                title: Text(result),
-                // Puedes agregar aquí la navegación o acción que desees para el resultado
+                title: Text(book.titulo!),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => imageInfo(
+                        autor: book.autor ?? 'Valor predeterminado en caso de nulo',
+                        titulo: book.titulo ?? 'Valor predeterminado en caso de nulo',
+                        edicion: book.edicion ?? 'Valor predeterminado en caso de nulo',
+                        editorial: book.editorial ?? 'Valor predeterminado en caso de nulo',
+                        isbn: book.isbn ?? 'Valor predeterminado en caso de nulo',
+                        paginas: book.paginas ?? 'Valor predeterminado en caso de nulo',
+                        photo: book.photoName ?? 'Valor predeterminado en caso de nulo',),
+                    ),
+                  );
+                },
               );
             },
           );
@@ -436,14 +449,13 @@ class CustomSearch extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    // Realiza la búsqueda en la base de datos y obtén los títulos de los libros
-    Future<List<String>> searchBooks() async {
-      // Realiza una consulta a la base de datos para obtener los títulos de los libros
-      List<Book> matchingBooks = await dbHelper.searchBooksByTitle(query);
-      return matchingBooks.map((book) => book.titulo!).toList();
+    // Realiza la búsqueda en la base de datos y obtén los libros
+    Future<List<Book>> searchBooks() async {
+      // Realiza una consulta a la base de datos para obtener los libros
+      return await dbHelper.searchBooksByTitle(query);
     }
 
-    return FutureBuilder<List<String>>(
+    return FutureBuilder<List<Book>>(
       future: searchBooks(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -456,10 +468,24 @@ class CustomSearch extends SearchDelegate {
           return ListView.builder(
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
-              var result = snapshot.data![index];
+              var book = snapshot.data![index];
               return ListTile(
-                title: Text(result),
-                // Puedes agregar aquí la navegación o acción que desees para el resultado
+                title: Text(book.titulo!),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => imageInfo(
+                          autor: book.autor ?? 'Valor predeterminado en caso de nulo',
+                      titulo: book.titulo ?? 'Valor predeterminado en caso de nulo',
+                      edicion: book.edicion ?? 'Valor predeterminado en caso de nulo',
+                      editorial: book.editorial ?? 'Valor predeterminado en caso de nulo',
+                      isbn: book.isbn ?? 'Valor predeterminado en caso de nulo',
+                      paginas: book.paginas ?? 'Valor predeterminado en caso de nulo',
+                      photo: book.photoName ?? 'Valor predeterminado en caso de nulo',),
+                    ),
+                  );
+                },
               );
             },
           );
@@ -467,4 +493,5 @@ class CustomSearch extends SearchDelegate {
       },
     );
   }
+
 }

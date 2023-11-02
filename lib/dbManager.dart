@@ -92,33 +92,7 @@ class DBManager {
     where: '$ID = ?', whereArgs: [book.controlNum]);
   }
 
-  // Query
-  Future<List<Book>> searchBooksByName(String name) async {
-    var dbClient = await db;
-    List<Map> maps = await dbClient!.query(TABLE,
-        columns: [
-          ID,
-          ISBN,
-          TITULO,
-          AUTOR,
-          EDITORIAL,
-          PAGINAS,
-          EDICION,
-          PHOTO_NAME
-        ],
-        where: "$TITULO LIKE ?",
-        whereArgs: ['%$name%']);
 
-    List<Book> books = [];
-
-    if (maps.isNotEmpty) {
-      for (int i = 0; i < maps.length; i++) {
-        books.add(Book.formMap(maps[i] as Map<String, dynamic>));
-      }
-    }
-
-    return books;
-  }
   //Close DB
   Future close() async{
     var dbClient = await (db);
@@ -151,5 +125,6 @@ class DBManager {
 
     return books;
   }
+
 
 }
