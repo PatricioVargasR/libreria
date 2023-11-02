@@ -49,6 +49,7 @@ class _HomePageState extends State<HomePage> {
 
   //Update control
   int? currentBookId;
+
   //String? currentBookIsbn;
 
   // Variable para guardar la imagen
@@ -216,58 +217,58 @@ class _HomePageState extends State<HomePage> {
         ],
         rows: Bookss!
             .map((book) => DataRow(cells: [
-          DataCell(
-              Container(
-                width: 80,
-                height: 120,
-                child:
-                Utility.ImageFromBase64String(book.photoName!),
-              ), onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => imageInfo(
-                      photo: book.photoName,
-                      titulo: book.titulo,
-                      autor: book.autor,
-                      editorial: book.editorial,
-                      paginas: book.paginas,
-                      edicion: book.edicion,
-                      isbn: book.isbn)),
-            );
-          }),
-          DataCell(Text(book.titulo!), onTap: () {
-            setState(() {
-              // En caso de que se actualice
-              isUpdating = true;
-              // Obtiene el ID y la Imagen del registro seleccionado
-              currentBookId = book.controlNum;
-              image = book.photoName;
-            });
-            tituloController.text = book.titulo!;
-            autorController.text = book.autor!;
-            editorialController.text = book.editorial!;
-            paginasController.text = book.paginas!;
-            edicionController.text = book.edicion!;
-            isbnController.text = book.isbn!;
-          }),
-          DataCell(Text(book.autor!)),
-          DataCell(Text(book.editorial!)),
-          DataCell(Text(book.paginas!)),
-          DataCell(Text(book.edicion!)),
-          DataCell(Text(book.isbn!)),
-          DataCell(IconButton(
-            onPressed: () {
-              dbHelper.delete(book.controlNum);
-              refreshList();
-            },
-            icon: const Icon(Icons.delete),
-          ))
-        ]))
+                  DataCell(
+                      Container(
+                        width: 80,
+                        height: 120,
+                        child: Utility.ImageFromBase64String(book.photoName!),
+                      ), onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => imageInfo(
+                              photo: book.photoName,
+                              titulo: book.titulo,
+                              autor: book.autor,
+                              editorial: book.editorial,
+                              paginas: book.paginas,
+                              edicion: book.edicion,
+                              isbn: book.isbn)),
+                    );
+                  }),
+                  DataCell(Text(book.titulo!), onTap: () {
+                    setState(() {
+                      // En caso de que se actualice
+                      isUpdating = true;
+                      // Obtiene el ID y la Imagen del registro seleccionado
+                      currentBookId = book.controlNum;
+                      image = book.photoName;
+                    });
+                    tituloController.text = book.titulo!;
+                    autorController.text = book.autor!;
+                    editorialController.text = book.editorial!;
+                    paginasController.text = book.paginas!;
+                    edicionController.text = book.edicion!;
+                    isbnController.text = book.isbn!;
+                  }),
+                  DataCell(Text(book.autor!)),
+                  DataCell(Text(book.editorial!)),
+                  DataCell(Text(book.paginas!)),
+                  DataCell(Text(book.edicion!)),
+                  DataCell(Text(book.isbn!)),
+                  DataCell(IconButton(
+                    onPressed: () {
+                      dbHelper.delete(book.controlNum);
+                      refreshList();
+                    },
+                    icon: const Icon(Icons.delete),
+                  ))
+                ]))
             .toList(),
       ),
     );
   }
+
   Widget list() {
     return Expanded(
         child: SingleChildScrollView(
@@ -285,6 +286,7 @@ class _HomePageState extends State<HomePage> {
               }),
         ));
   }
+
   validate() {
     // Validar los métodos
     if (formKey.currentState!.validate()) {
@@ -352,6 +354,13 @@ class _HomePageState extends State<HomePage> {
         automaticallyImplyLeading: false,
         title: const Text('Libros'),
         centerTitle: true,
+        actions: [
+          IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: () {
+                showSearch(context: context, delegate: CustomSearch(dbHelper));
+              })
+        ],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -359,6 +368,103 @@ class _HomePageState extends State<HomePage> {
         verticalDirection: VerticalDirection.down,
         children: [userForm(), list()],
       ),
+    );
+  }
+}
+
+class CustomSearch extends SearchDelegate {
+  final DBManager dbHelper;
+
+  CustomSearch(this.dbHelper);
+
+
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      IconButton(
+        onPressed: () {
+          query = '';
+        },
+        icon: const Icon(Icons.clear),
+      )
+    ];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        close(context, null);
+      },
+      icon: const Icon(Icons.arrow_back),
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    // Realiza la búsqueda en la base de datos y obtén los títulos de los libros
+    Future<List<String>> searchBooks() async {
+      // Realiza una consulta a la base de datos para obtener los títulos de los libros
+      List<Book> matchingBooks = await dbHelper.searchBooksByTitle(query);
+      return matchingBooks.map((book) => book.titulo!).toList();
+    }
+
+    return FutureBuilder<List<String>>(
+      future: searchBooks(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return Text('No se encontraron resultados');
+        } else {
+          return ListView.builder(
+            itemCount: snapshot.data!.length,
+            itemBuilder: (context, index) {
+              var result = snapshot.data![index];
+              return ListTile(
+                title: Text(result),
+                // Puedes agregar aquí la navegación o acción que desees para el resultado
+              );
+            },
+          );
+        }
+      },
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    // Realiza la búsqueda en la base de datos y obtén los títulos de los libros
+    Future<List<String>> searchBooks() async {
+      // Realiza una consulta a la base de datos para obtener los títulos de los libros
+      List<Book> matchingBooks = await dbHelper.searchBooksByTitle(query);
+      return matchingBooks.map((book) => book.titulo!).toList();
+    }
+
+    return FutureBuilder<List<String>>(
+      future: searchBooks(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return Text('No se encontraron resultados');
+        } else {
+          return ListView.builder(
+            itemCount: snapshot.data!.length,
+            itemBuilder: (context, index) {
+              var result = snapshot.data![index];
+              return ListTile(
+                title: Text(result),
+                // Puedes agregar aquí la navegación o acción que desees para el resultado
+              );
+            },
+          );
+        }
+      },
     );
   }
 }
