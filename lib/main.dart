@@ -126,8 +126,15 @@ class _HomePageState extends State<HomePage> {
               decoration: const InputDecoration(
                 labelText: 'Titulo del Libro',
               ),
-              validator: (val) => val!.isEmpty ? 'Titulo' : null,
-              onSaved: (val) => titulo = val!,
+              validator: (value) {
+                if (value!.isEmpty ||
+                    !RegExp(r"^[A-Za-z]+$")
+                        .hasMatch(value)) {
+                  return "Ingresa un valor valido";
+                }
+                return null;
+              },
+              onSaved: (value) => titulo = value,
             ),
             TextFormField(
               controller: autorController,
@@ -135,8 +142,15 @@ class _HomePageState extends State<HomePage> {
               decoration: const InputDecoration(
                 labelText: 'Autor/Autores',
               ),
-              validator: (val) => val!.isEmpty ? 'Autor/Autores' : null,
-              onSaved: (val) => autor = val!,
+              validator: (value) {
+                if (value!.isEmpty ||
+                    !RegExp(r"^[A-Za-z]+$")
+                        .hasMatch(value)) {
+                  return "Ingresa un valor valido";
+                }
+                return null;
+              },
+              onSaved: (value) => autor = value,
             ),
             TextFormField(
               controller: editorialController,
@@ -144,8 +158,15 @@ class _HomePageState extends State<HomePage> {
               decoration: const InputDecoration(
                 labelText: 'Editorial',
               ),
-              validator: (val) => val!.isEmpty ? 'Editorial' : null,
-              onSaved: (val) => editorial = val!,
+              validator: (value) {
+                if (value!.isEmpty ||
+                    !RegExp(r"^[A-Za-z]+$")
+                        .hasMatch(value)) {
+                  return "Ingresa un valor valido";
+                }
+                return null;
+              },
+              onSaved: (value) => editorial = value,
             ),
             TextFormField(
               controller: paginasController,
@@ -153,7 +174,12 @@ class _HomePageState extends State<HomePage> {
               decoration: const InputDecoration(
                 labelText: 'No. Páginas',
               ),
-              validator: (val) => val!.isEmpty ? 'No. Páginas' : null,
+              validator: (value) {
+                if (value!.isEmpty || value.length < 10 || !RegExp(r'^[0-9]+$').hasMatch(value)) {
+                  return "Ingresa solo números";
+                }
+                return null;
+              },
               onSaved: (val) => paginas = val!,
             ),
             TextFormField(
@@ -162,7 +188,12 @@ class _HomePageState extends State<HomePage> {
               decoration: const InputDecoration(
                 labelText: 'Edición',
               ),
-              validator: (val) => val!.isEmpty ? 'Edición' : null,
+              validator: (value) {
+                if (value!.isEmpty || value.length < 10 || !RegExp(r'^[0-9]+$').hasMatch(value)) {
+                  return "Ingresa un valor válido";
+                }
+                return null;
+              },
               onSaved: (val) => edicion = val!,
             ),
             TextFormField(
@@ -171,7 +202,12 @@ class _HomePageState extends State<HomePage> {
               decoration: const InputDecoration(
                 labelText: 'ISBN',
               ),
-              validator: (val) => val!.isEmpty ? 'Enter isbn' : null,
+              validator: (value) {
+                if (value!.isEmpty || value.length < 10 || !RegExp(r'^[0-9]+$').hasMatch(value)) {
+                  return "Ingresa un ISBN correcto";
+                }
+                return null;
+              },
               onSaved: (val) => isbn = val!,
             ),
             Row(
