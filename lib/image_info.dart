@@ -31,9 +31,9 @@ class _imageInfoState extends State<imageInfo> {
     return Scaffold(
         appBar: AppBar(
           title: const Text("Datos del libro",
-              style: TextStyle(color: Colors.yellowAccent)),
+              style: TextStyle(color: Colors.white60)),
           centerTitle: true,
-          backgroundColor: Colors.redAccent,
+          backgroundColor: Colors.brown,
         ),
         body: ListView(
           //mainAxisAlignment: MainAxisAlignment.center,
@@ -48,10 +48,10 @@ class _imageInfoState extends State<imageInfo> {
                   style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
-                      color: Colors.redAccent),
+                      color: Colors.brown),
                 )),
             const SizedBox(
-              height: 50,
+              height: 20,
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -59,63 +59,69 @@ class _imageInfoState extends State<imageInfo> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                    width: 100,
-                    height: 120,
+                    width: 170,
+                    height: 200,
                     child: Utility.ImageFromBase64String(widget.photo!),
                   ),
                   const SizedBox(
-                    height: 50,
+                    height: 15,
                   ),
-                  Text("Titulo ${widget.titulo}",
-                      style: const TextStyle(
+                  const Text("Titulo",
+                      style:  TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.redAccent)),
-                  const SizedBox(
-                    height: 30,
+                          color: Colors.brown)),
+                  const SizedBox(height: 7),
+                  Text("${widget.titulo}",
+                  style:const TextStyle(fontSize: 20),
                   ),
-                  Text("Autor/Autores: ${widget.autor}",
-                      style: const TextStyle(
+                  const Text("Autor/Autores",
+                      style:  TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.redAccent)),
-                  const SizedBox(
-                    height: 30,
+                          color: Colors.brown)),
+                  const SizedBox(height: 7),
+                  Text("${widget.autor}",
+                    style:const TextStyle(fontSize: 20),
                   ),
-                  Text("Editorial: ${widget.editorial} ",
-                      style: const TextStyle(
+                  const Text("Editorial",
+                      style:  TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.redAccent)),
-                  const SizedBox(
-                    height: 30,
+                          color: Colors.brown)),
+                  const SizedBox(height: 7),
+                  Text("${widget.editorial}",
+                    style:const TextStyle(fontSize: 20),
                   ),
-                  Text("No. de Páginas: ${widget.paginas}",
-                      style: const TextStyle(
+                  const Text("Páginas",
+                      style:  TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.redAccent)),
-                  const SizedBox(
-                    height: 30,
+                          color: Colors.brown)),
+                  const SizedBox(height: 7),
+                  Text("${widget.paginas}",
+                    style:const TextStyle(fontSize: 20),
                   ),
-                  Text("Edición: ${widget.edicion}",
-                      style: const TextStyle(
+                  const Text("Edición",
+                      style:  TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.redAccent)),
-                  const SizedBox(
-                    height: 30,
+                          color: Colors.brown)),
+                  const SizedBox(height: 7),
+                  Text("${widget.edicion}",
+                    style:const TextStyle(fontSize: 20),
                   ),
-                  Text("ISBN: ${widget.isbn}",
-                      style: const TextStyle(
+                  const Text("ISBN",
+                      style:  TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.redAccent)),
+                          color: Colors.brown)),
+                  const SizedBox(height: 7),
+                  Text("${widget.isbn}",
+                    style:const TextStyle(fontSize: 20),
+                  ),
                 ],
               ),
-            ),
-            const SizedBox(
-              height: 50,
             ),
             ElevatedButton(
               onPressed: () {

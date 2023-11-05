@@ -388,7 +388,9 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         // Evitar botón de regreso
         automaticallyImplyLeading: false,
-        title: const Text('Libros'),
+        title: const Text('Libros',
+            style: TextStyle(color: Colors.white60)),
+        backgroundColor: Colors.brown,
         centerTitle: true,
         actions: [
           IconButton(
