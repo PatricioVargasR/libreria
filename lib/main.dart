@@ -128,7 +128,7 @@ class _HomePageState extends State<HomePage> {
               ),
               validator: (value) {
                 if (value!.isEmpty ||
-                    !RegExp(r"^[A-Za-z]+$")
+                    !RegExp(r'^[A-Za-z ]+$')
                         .hasMatch(value)) {
                   return "Ingresa un valor valido";
                 }
@@ -144,7 +144,7 @@ class _HomePageState extends State<HomePage> {
               ),
               validator: (value) {
                 if (value!.isEmpty ||
-                    !RegExp(r"^[A-Za-z]+$")
+                    !RegExp(r"^[A-Za-z ]+$")
                         .hasMatch(value)) {
                   return "Ingresa un valor valido";
                 }
@@ -160,7 +160,7 @@ class _HomePageState extends State<HomePage> {
               ),
               validator: (value) {
                 if (value!.isEmpty ||
-                    !RegExp(r"^[A-Za-z]+$")
+                    !RegExp(r"^[A-Za-z ]+$")
                         .hasMatch(value)) {
                   return "Ingresa un valor valido";
                 }
@@ -175,7 +175,7 @@ class _HomePageState extends State<HomePage> {
                 labelText: 'No. Páginas',
               ),
               validator: (value) {
-                if (value!.isEmpty || value.length < 10 || !RegExp(r'^[0-9]+$').hasMatch(value)) {
+                if (value!.isEmpty || !RegExp(r'^[0-9]+$').hasMatch(value)) {
                   return "Ingresa solo números";
                 }
                 return null;
@@ -189,7 +189,7 @@ class _HomePageState extends State<HomePage> {
                 labelText: 'Edición',
               ),
               validator: (value) {
-                if (value!.isEmpty || value.length < 10 || !RegExp(r'^[0-9]+$').hasMatch(value)) {
+                if (value!.isEmpty || !RegExp(r'^[0-9]+$').hasMatch(value)) {
                   return "Ingresa un valor válido";
                 }
                 return null;
@@ -363,7 +363,7 @@ class _HomePageState extends State<HomePage> {
         } else {
           // Asigna los valores correspondientes
           Book book = Book(
-            controlNum: currentBookId,
+            controlNum: null,
             titulo: titulo,
             autor: autor,
             editorial: editorial,
@@ -400,10 +400,10 @@ class _HomePageState extends State<HomePage> {
               })
         ],
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        verticalDirection: VerticalDirection.down,
+      body: ListView(
+        //mainAxisAlignment: MainAxisAlignment.center,
+        //mainAxisSize: MainAxisSize.min,
+        //verticalDirection: VerticalDirection.down,
         children: [userForm(), list()],
       ),
     );
@@ -467,13 +467,13 @@ class CustomSearch extends SearchDelegate {
                     context,
                     MaterialPageRoute(
                       builder: (context) => imageInfo(
-                        autor: book.autor ?? 'Valor predeterminado en caso de nulo',
-                        titulo: book.titulo ?? 'Valor predeterminado en caso de nulo',
-                        edicion: book.edicion ?? 'Valor predeterminado en caso de nulo',
-                        editorial: book.editorial ?? 'Valor predeterminado en caso de nulo',
-                        isbn: book.isbn ?? 'Valor predeterminado en caso de nulo',
-                        paginas: book.paginas ?? 'Valor predeterminado en caso de nulo',
-                        photo: book.photoName ?? 'Valor predeterminado en caso de nulo',),
+                        autor: book.autor ?? 'Sin información',
+                        titulo: book.titulo ?? 'Sin información',
+                        edicion: book.edicion ?? 'Sin información',
+                        editorial: book.editorial ?? 'Sin información',
+                        isbn: book.isbn ?? 'Sin información',
+                        paginas: book.paginas ?? 'Sin información',
+                        photo: book.photoName ?? 'Sin información',),
                     ),
                   );
                 },
@@ -514,13 +514,13 @@ class CustomSearch extends SearchDelegate {
                     context,
                     MaterialPageRoute(
                       builder: (context) => imageInfo(
-                          autor: book.autor ?? 'Valor predeterminado en caso de nulo',
-                      titulo: book.titulo ?? 'Valor predeterminado en caso de nulo',
-                      edicion: book.edicion ?? 'Valor predeterminado en caso de nulo',
-                      editorial: book.editorial ?? 'Valor predeterminado en caso de nulo',
-                      isbn: book.isbn ?? 'Valor predeterminado en caso de nulo',
-                      paginas: book.paginas ?? 'Valor predeterminado en caso de nulo',
-                      photo: book.photoName ?? 'Valor predeterminado en caso de nulo',),
+                          autor: book.autor ?? 'Sin información',
+                      titulo: book.titulo ?? 'Sin información',
+                      edicion: book.edicion ?? 'Sin información',
+                      editorial: book.editorial ?? 'Sin información',
+                      isbn: book.isbn ?? 'Sin información',
+                      paginas: book.paginas ?? 'Sin información',
+                      photo: book.photoName ?? 'Sin información',),
                     ),
                   );
                 },
