@@ -1,36 +1,37 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:libreria/convert_utility.dart';
 
-class imageInfo extends StatefulWidget {
-  const imageInfo({
+
+class personajeInfo extends StatefulWidget {
+  const personajeInfo({
     super.key,
-    required this.photo,
-    required this.titulo,
-    required this.autor,
-    required this.editorial,
-    required this.paginas,
-    required this.edicion,
-    required this.isbn,
+    required this.identificador,
+    required this.stand,
+    required this.referencia,
+    required this.fecha_nacimiento,
+    required this.nacionalidad,
+    required this.imagen
+
   });
 
-  final String? photo;
-  final String? titulo;
-  final String? autor;
-  final String? editorial;
-  final String? paginas;
-  final String? edicion;
-  final String? isbn;
+  final String? identificador;
+  final String? stand;
+  final String? referencia;
+  final String? fecha_nacimiento;
+  final String? nacionalidad;
+  final String? imagen;
+
 
   @override
-  State<imageInfo> createState() => _imageInfoState();
+  State<personajeInfo> createState() => _personajeInfoState();
 }
 
-class _imageInfoState extends State<imageInfo> {
+class _personajeInfoState extends State<personajeInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Datos del libro",
+          title: const Text("Datos del personaje",
               style: TextStyle(color: Colors.white60)),
           centerTitle: true,
           backgroundColor: Colors.brown,
@@ -44,7 +45,7 @@ class _imageInfoState extends State<imageInfo> {
             ),
             const Center(
                 child: Text(
-                  "Información del libro",
+                  "Información del personaje",
                   style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
@@ -61,65 +62,61 @@ class _imageInfoState extends State<imageInfo> {
                   Container(
                     width: 170,
                     height: 200,
-                    child: Utility.ImageFromBase64String(widget.photo!),
+                    child: CachedNetworkImage(
+                      imageUrl: widget.imagen ?? "Null",
+                      placeholder: (context, url) => CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
                   ),
                   const SizedBox(
                     height: 15,
                   ),
-                  const Text("Titulo",
+                  const Text("Nombre",
                       style:  TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.brown)),
                   const SizedBox(height: 7),
-                  Text("${widget.titulo}",
-                  style:const TextStyle(fontSize: 20),
-                  ),
-                  const Text("Autor/Autores",
-                      style:  TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.brown)),
-                  const SizedBox(height: 7),
-                  Text("${widget.autor}",
+                  Text("${widget.identificador}",
                     style:const TextStyle(fontSize: 20),
                   ),
-                  const Text("Editorial",
+                  const Text("Stand",
                       style:  TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.brown)),
                   const SizedBox(height: 7),
-                  Text("${widget.editorial}",
+                  Text("${widget.stand}",
                     style:const TextStyle(fontSize: 20),
                   ),
-                  const Text("Páginas",
+                  const Text("Referencia",
                       style:  TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.brown)),
                   const SizedBox(height: 7),
-                  Text("${widget.paginas}",
+                  Text("${widget.referencia}",
                     style:const TextStyle(fontSize: 20),
                   ),
-                  const Text("Edición",
+                  const Text("Fecha de Nacimiento",
                       style:  TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.brown)),
                   const SizedBox(height: 7),
-                  Text("${widget.edicion}",
+                  Text("${widget.fecha_nacimiento}",
                     style:const TextStyle(fontSize: 20),
                   ),
-                  const Text("ISBN",
+                  const Text("Nacionalidad",
                       style:  TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.brown)),
                   const SizedBox(height: 7),
-                  Text("${widget.isbn}",
+                  Text("${widget.nacionalidad}",
                     style:const TextStyle(fontSize: 20),
                   ),
+
                 ],
               ),
             ),
